@@ -49,10 +49,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
-    }
-
-
-
+    },
+    containerButton: {
+        position: 'absolute',
+        top: 520,
+        marginLeft: 270,
+        borderRadius: 400,
+        backgroundColor: 'transparent',
+      },
+    buttonAdd: {
+        backgroundColor: 'transparent',
+        borderRadius: 300,
+      },
+    icon: {
+    },
+    category: {
+        width: 100,
+        maxHeight: 200,
+        backgroundColor: '#FFF',
+        marginHorizontal: 20,
+    
+    
+      },
 });
 
 export default styles;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
-import MapView from 'react-native-maps';
+import {View, TouchableOpacity, Text, Button} from 'react-native';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Geolocation from '@react-native-community/geolocation';
 import Search from '../search/';
 import Directions from '../Directions/';
@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export default class Map extends Component {
     state = {
         region: undefined, 
-        destination: null,
+        destination: undefined,
     };
 
     async componentDidMount(){
@@ -26,12 +26,17 @@ export default class Map extends Component {
         const {location: { lat: latitude, lng: longitude}} = geometry
 
         this.setState({
-            destination: {
+            region: {
                 latitude,
                 longitude,
-                title: data.structured_formatting.main_text,
             }
         })
+
+        this.mapView.animateToCoordinate({
+            latitude,
+            longitude
+        }, 1000)
+
 
 
     }
@@ -43,46 +48,31 @@ export default class Map extends Component {
 		return (
 			<View style={{flex:1}}>
                 <MapView
-                style={{flex:1}}                
+                style={{flex:1}}  
+                provider={PROVIDER_GOOGLE}              
                 initialRegion={region}
                 loadingEnabled = {true}
                 showsUserLocation = {true}
                 ref = {(el) => {this.mapView = el}}
-                >
-                    
-                    {destination && (
-                        <Directions
-                            origin={region}
-                            destination={destination}
-                            onReady={result => {
-                                this.mapView.fitToCoordinates(result.coordinates, {
-                                    edgePadding: {
-                                        right: 50,
-                                        left: 50,
-                                        top: 50,
-                                        bottom: 50
-                                    }
-                                });
-
-                            }}
-                        />    
-
-                    )}
-                    
+                >     
+                <Marker
+                coordinate={
+                    region
+                }
+                />
                 </MapView>  
 
-                <Icon.Button
-                    name="add-circle"
-                    color="red"
-                    onPress={() => alert('Login with Facebook')}
-                    backgroundColor={"transparent"}
-                
+                <Search onLocationSelected = {this.handleLocationSelected}/>        
 
+                <View style={styles.containerButton}>
+                <TouchableOpacity 
+                style={styles.buttonAdd}
+                onPress={ () => {this.props.navigation.navigate('Cadastro')}
+                }
                 >
-                    
-                </Icon.Button> 
-
-                <Search onLocationSelected = {this.handleLocationSelected}/>                     
+                <Icon name="add-circle" size={80} color={'#2c3e50'} style={styles.icon} />                        
+                </TouchableOpacity>       
+                </View>    
 
 
 			</View>
