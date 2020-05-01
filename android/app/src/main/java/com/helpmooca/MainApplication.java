@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -27,10 +29,12 @@ public class MainApplication extends Application implements ReactApplication {
         @Override
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
-              final List<ReactPackage> packages = new PackageList(this).getPackages();
+              List<ReactPackage> packages = new PackageList(this).getPackages();
               // Packages that cannot be autolinked yet can be added manually here, for
               // example:
               // packages.add(new MyReactNativePackage());
+              packages.add(new RNFirebaseAuthPackage());
+              //new RNFirebaseAuthPackage();
 
               return packages;
             }

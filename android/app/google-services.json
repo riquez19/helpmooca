@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "743565272977",
+    "firebase_url": "https://projetopi-399b4.firebaseio.com",
+    "project_id": "projetopi-399b4",
+    "storage_bucket": "projetopi-399b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743565272977:android:3031a7291916462f0b9c30",
+        "android_client_info": {
+          "package_name": "com.helpmooca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "743565272977-a2l49udrmsqnegu2bue49kq2jsqfp0e3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgbcql5pcNLNjC_7oNihRY4_qzDSgeU5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "743565272977-a2l49udrmsqnegu2bue49kq2jsqfp0e3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

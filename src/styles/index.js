@@ -9,12 +9,20 @@ const styles = StyleSheet.create({
 
     },
     logo: {
+        marginTop: 70,
         width: 150,
         height: 150,
         borderRadius: 20,
     },
+    logoCriar: {
+        marginTop: 10,
+        width: 300,
+        height: 150,
+        resizeMode: 'contain',
+    },
     imput: {
-        marginTop: 15,
+        color: '#FFF',
+        marginTop: 25,
         padding: 10,
         width: 300,
         backgroundColor: '#2c3e50',
@@ -26,7 +34,7 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     button: {
-        marginTop: 15,
+        marginTop: 30,
         height: 45,
         width: 150,
         padding: 10,
@@ -35,9 +43,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    buttonCreate: {
+        marginTop: 100,
+        height: 30,
+        width: 200,
+        padding: 10,
+        backgroundColor: '#2c3e50',
+        borderRadius: 3,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderColor: '#FFF', 
+        borderWidth: 1,
+    },
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    buttonTextCreate: {
+        color: '#FFF',
+        fontSize: 16,
     },
     buttonAdd: {
         marginTop: 15,

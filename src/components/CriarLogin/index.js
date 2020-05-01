@@ -19,26 +19,41 @@ export default class App extends Component{
   state = {
     email: '',
     password: '',
-    antenticou: false,
+    cadastrou: false,
     erro: true,
   }
 
-  
-  login = async() => {
+ 
+  singIn = async() => {
     const { email, password} = this.state;
 
     try{
-      const user = await firebase.auth().signInWithEmailAndPassword(email,password)
+      const user = await firebase.auth().createUserWithEmailAndPassword(email,password)
 
-      this.setState({ antenticou: true})      
+      this.setState({ cadastrou: true})      
 
       console.log(user)
+
+      Alert.alert(
+        'Parabéns',
+        'Usuário Cadastrado com sucesso',
+        [
+            {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},    
+            {text: 'OK', onPress: () => (this.props.navigation.navigate('Login'))},
+            ],
+          ) 
 
     } catch (err) {
       Alert.alert(
         'Atenção',
-        'Usuário ou Senha Inválidos'
+        'Problema ao cadastrar novo usuário. Tente novamente mais tarde',
+        [
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed!')},    
+        {text: 'OK', onPress: () => console.log('OK Pressed!')},
+        ],
       )  
+
+      onButtonPress = () => (this.props.navigation.navigate('Login'))
       console.log(err)
     }
   }  
@@ -49,8 +64,8 @@ export default class App extends Component{
     return (
       <View style={styles.container}>
         <Image
-         source={require('../../assets/aviso.png')}
-         style={styles.logo}
+         source={require('../../assets/cadastrese.png')}
+         style={styles.logoCriar}
         />
 
         <TextInput
@@ -73,19 +88,10 @@ export default class App extends Component{
 
         <TouchableOpacity 
         style={styles.button}
-        onPress={this.login}
+        onPress={this.singIn}
         >  
-        <Text style={styles.buttonText}> Login </Text>            
-        </TouchableOpacity> 
-
-        <TouchableOpacity 
-        style={styles.buttonCreate}
-        onPress={() => (this.props.navigation.navigate('CriarLogin'))}
-        >  
-        <Text style={styles.buttonTextCreate}> Criar Usuário </Text>            
-        </TouchableOpacity> 
-
-        {this.state.antenticou ? this.props.navigation.navigate('Map') : null}  
+        <Text style={styles.buttonText}> Cadastrar </Text>            
+        </TouchableOpacity>   
 
 
       </View>
