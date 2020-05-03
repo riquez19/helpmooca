@@ -12,24 +12,27 @@ export default class search extends Component{
         const { onLocationSelected } = this.props               
         
         return <GooglePlacesAutocomplete
-            enablePowerredByContainer = {false}
-            currentLocation = {false}
+            enablePowerredByContainer = {false}            
             placeholder="Para Onde?"
             placeholderTextColor="#333"
             onPress={onLocationSelected}
             query={{
                 key: 'AIzaSyCGYGnFBOxJXi3y40CE5LY5Fg4-mnCVX6s',
-                langague: 'pt'
+                langague: 'pt-BR'
+                //types: '(address)',
                 
             }}
+            currentLocation={false} // Will add a 'Current location' button at the top of the predefined places list  
+            nearbyPlacesAPI="GoogleReverseGeocoding"
             textInputProps={{
                 onFocus: () => {this.setState({ searchFocused: true})},
                 onBlur: () => {this.setState({ searchFocused: false})},
                 autoCapitalize: "none",
-                autoCorrect: false
+                autoCorrect: false,
             }}
             listViewDisplayed={searchFocused}
             fetchDetails = {true}
+            ref={c => this.googlePlacesAutocomplete = c}
             
             
             styles={{
@@ -73,12 +76,12 @@ export default class search extends Component{
                 description: {
                     fontSize: 16
                 },
-                row: {},
 
-            }}
+            }}  
             
             
         />
+        
 
     }
     

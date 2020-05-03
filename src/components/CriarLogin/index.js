@@ -16,19 +16,37 @@ import styles from '../../styles/index'
 
 export default class App extends Component{
 
-  state = {
-    email: '',
-    password: '',
-    cadastrou: false,
-    erro: true,
-  }
+  constructor(props) {
+    super(props);
+    this.state = {
+      antenticou: false,
+      erro: true,
+      TextInputSenha: '',
+      TextInputEmail: '',
+    }}
+
+  CheckTextInput = () => {
+    if (this.state.TextInputEmail != '') {
+      if (this.state.TextInputSenha != '') {
+        this.singIn()
+      } else {
+        Alert.alert(
+        'Atenção',
+        'Por favor, digite um e-mail e/ou senha para cadastro');
+      }
+    } else {
+      Alert.alert(
+        'Atenção',
+        'Por favor, digite um e-mail e/ou senha para cadastro');
+    }
+  };
 
  
   singIn = async() => {
-    const { email, password} = this.state;
+    const { TextInputEmail, TextInputSenha} = this.state;
 
     try{
-      const user = await firebase.auth().createUserWithEmailAndPassword(email,password)
+      const user = await firebase.auth().createUserWithEmailAndPassword(TextInputEmail,TextInputSenha)
 
       this.setState({ cadastrou: true})      
 
@@ -70,25 +88,25 @@ export default class App extends Component{
 
         <TextInput
         style={styles.imput}
+        underlineColorAndroid={'#FFF'}
         placeholder='E-mail:'
         placeholderTextColor = '#FFF'
-        value = {this.state.email}
-        onChangeText={email => this.setState({ email })}
+        onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
         />
 
         <TextInput
         style={styles.imput}
         secureTextEntry={true}
+        underlineColorAndroid={'#FFF'}
         placeholder='Senha:'
         placeholderTextColor = '#FFF'
-        value = {this.state.password}
-        onChangeText={password => this.setState({ password })}
+        onChangeText={TextInputEmail => this.setState({ TextInputSenha })}
         /> 
         
 
         <TouchableOpacity 
         style={styles.button}
-        onPress={this.singIn}
+        onPress={this.CheckTextInput}
         >  
         <Text style={styles.buttonText}> Cadastrar </Text>            
         </TouchableOpacity>   

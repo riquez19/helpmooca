@@ -15,27 +15,44 @@ import styles from '../../styles/index'
 
 
 export default class App extends Component{
-
-  state = {
-    email: '',
-    password: '',
+  constructor(props) {
+  super(props);
+  this.state = {
     antenticou: false,
     erro: true,
-  }
+    TextInputSenha: '',
+    TextInputEmail: '',
+  }}
+
+  CheckTextInput = () => {
+    if (this.state.TextInputEmail != '') {
+      if (this.state.TextInputSenha != '') {
+        this.login()
+      } else {
+        Alert.alert(
+        'Atenção',
+        'Por favor, digite seu email e/ou senha');
+      }
+    } else {
+      Alert.alert(
+        'Atenção',
+        'Por favor, digite seu email e/ou senha');
+    }
+  };
 
   
   login = async() => {
-    const { email, password} = this.state;
+    const { TextInputEmail, TextInputSenha } = this.state;
 
     try{
-      const user = await firebase.auth().signInWithEmailAndPassword(email,password)
+      const user = await firebase.auth().signInWithEmailAndPassword(TextInputEmail,TextInputSenha)
 
       this.setState({ antenticou: true})      
 
       console.log(user)
 
     } catch (err) {
-      Alert.alert(
+      Alert.alert(  
         'Atenção',
         'Usuário ou Senha Inválidos'
       )  
@@ -55,31 +72,33 @@ export default class App extends Component{
 
         <TextInput
         style={styles.imput}
+        underlineColorAndroid={'#FFF'}
         placeholder='E-mail:'
         placeholderTextColor = '#FFF'
-        value = {this.state.email}
-        onChangeText={email => this.setState({ email })}
+        keyboardType='email-address'
+        onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
+        
         />
 
         <TextInput
         style={styles.imput}
         secureTextEntry={true}
+        underlineColorAndroid={'#FFF'}
         placeholder='Senha:'
         placeholderTextColor = '#FFF'
-        value = {this.state.password}
-        onChangeText={password => this.setState({ password })}
-        /> 
-        
+        onChangeText={TextInputSenha => this.setState({ TextInputSenha })}
+        />         
 
         <TouchableOpacity 
         style={styles.button}
-        onPress={this.login}
+        onPress={this.CheckTextInput}
         >  
         <Text style={styles.buttonText}> Login </Text>            
         </TouchableOpacity> 
 
         <TouchableOpacity 
         style={styles.buttonCreate}
+        //onPress={() => (this.props.navigation.navigate('CriarLogin'))}
         onPress={() => (this.props.navigation.navigate('CriarLogin'))}
         >  
         <Text style={styles.buttonTextCreate}> Criar Usuário </Text>            

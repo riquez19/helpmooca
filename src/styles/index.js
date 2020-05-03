@@ -28,10 +28,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#2c3e50',
         fontSize: 16,
         fontWeight: 'bold',
-        borderRadius:3,
-        borderColor: '#FFF', 
-        borderWidth: 1,  
-        marginBottom: 10
+        //borderRadius:3,
+        //borderColor: '#FFF', 
+        //borderWidth: 1,  
+        marginBottom: 10,
     },
     button: {
         marginTop: 30,
@@ -85,8 +85,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
         borderRadius: 300,
       },
-    icon: {
-    },
+      containerButton2: {
+        position: 'absolute',
+        top: 460,
+        marginLeft: 285,
+        borderRadius: 400,
+        backgroundColor: '#FFF',
+      },
     category: {
         width: 100,
         maxHeight: 200,

@@ -75,20 +75,28 @@ export default class Cadastro extends Component{
           </View>
         </ScrollView>
         
-        
+        <View style = {styles.container2}>
         <TextInput
         style={styles.imputDesc}
-        placeholder='Descrição da ocorrência:'
+        placeholder='Insira aqui a descrição da ocorrência'
         placeholderTextColor = '#FFF'
+        multiline={true}
         />
 
         <TouchableOpacity 
-        style={styles.button}
-        >
-  
-        <Text style={styles.buttonText}>Cadastrar </Text>  
-          
+        style={styles.button1}
+        >  
+        <Icon name="camera-alt" size={30} color="black"/> 
+        <Text style={styles.buttonText}>    Inserir Foto/Vídeo </Text>                   
         </TouchableOpacity>
+
+        <TouchableOpacity 
+        style={styles.button}
+        >  
+        <Text style={styles.buttonText}>Cadastrar </Text>            
+        </TouchableOpacity>
+
+        </View>    
         
       </View>
       
@@ -113,19 +121,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#2c3e50',
-    justifyContent: 'center',
-    alignItems: 'center',
+    //justifyContent: 'center',
+    //alignItems: 'center',
 
   },
   container2: {
-    //flex: 'flex-start',
-    backgroundColor: '#FFF',
-    justifyContent: 'center',
+    //flex: 1,
+    backgroundColor: '#2c3e50',
+    //justifyContent: 'center',
     alignItems: 'center',
 
   },
   imputDesc: {
-    //marginVertical: 20,
+    height: 150,
+    //marginTop: 30,
     padding: 10,
     width: width - 40,
     backgroundColor: '#2c3e50',
@@ -134,9 +143,12 @@ const styles = StyleSheet.create({
     borderRadius:3,
     borderColor: '#FFF', 
     borderWidth: 1,  
+    textAlign: 'center',    
+    color: '#FFF'
   },
   button: {
-    //marginTop: 150,
+    marginTop: 50,
+    marginBottom: 20,
     height: 45,
     width: 150,
     padding: 10,
@@ -144,10 +156,23 @@ const styles = StyleSheet.create({
     borderRadius: 3,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'row'
+  },
+  button1: {
+    marginTop: 50,
+    marginBottom: 20,
+    height: 45,
+    width: 200,
+    padding: 10,
+    backgroundColor: '#FFF',
+    borderRadius: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row'
   },
   buttonText: {
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: 'bold',    
   },
 })
 
