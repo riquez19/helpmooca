@@ -5,14 +5,15 @@ import {
   Text,
   Image,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  StatusBar
 } from 'react-native';
 import firebase from  'react-native-firebase';
-
-
-import styles from '../../styles/index'
-
-
+import styles from '../../styles/index';
+import * as Animatable from 'react-native-animatable';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default class App extends Component{
 
@@ -22,13 +23,22 @@ export default class App extends Component{
       antenticou: false,
       erro: true,
       TextInputSenha: '',
+      TextInputConfirmSenha: '',
       TextInputEmail: '',
+      secureTextEntry: true,
+      secureTextEntry_confirm: true
     }}
 
   CheckTextInput = () => {
     if (this.state.TextInputEmail != '') {
       if (this.state.TextInputSenha != '') {
-        this.singIn()
+        if(this.state.TextInputSenha == this.state.TextInputConfirmSenha) {
+          this.singIn()
+        } else {
+          Alert.alert(
+            'Atenção',
+            'Senhas divergentes, favor digitar senhas iguais');
+        }
       } else {
         Alert.alert(
         'Atenção',
@@ -41,7 +51,17 @@ export default class App extends Component{
     }
   };
 
- 
+  // validarSenha = () => {
+  //   if(this.state.TextInputSenha != this.state.TextInputConfirmSenha) {
+  //     Alert.alert(
+  //       'Atenção',
+  //       'Senhas divergentes, favor digitar senhas iguais');
+  //   } else {
+  //     this.singIn()
+  //   }
+  // }
+
+
   singIn = async() => {
     const { TextInputEmail, TextInputSenha} = this.state;
 
@@ -74,48 +94,146 @@ export default class App extends Component{
       onButtonPress = () => (this.props.navigation.navigate('Login'))
       console.log(err)
     }
-  }  
+  } 
+
+  secureTextEntry() {
+    this.setState({
+      secureTextEntry: !this.state.secureTextEntry
+    })
+  }
+
+  secureTextEntry_confirm() {
+    this.setState({
+      secureTextEntry_confirm: !this.state.secureTextEntry_confirm
+    })
+  }
   
     
 
   render() {
     return (
       <View style={styles.container}>
-        <Image
+        <StatusBar barStyle="light-content" />
+        <View style={styles.header}>
+        <Animatable.Image
+          animation="bounceIn"
          source={require('../../assets/cadastrese.png')}
          style={styles.logoCriar}
+         resizeMode={"stretch"}
         />
+        </View>
+        <Animatable.View
+          style={styles.footer}
+          animation="fadeInUpBig">
+          <Text style={styles.text_footer}>E-mail</Text>
+          <View style={styles.action}>
+            <FontAwesome
+              name="user-o"
+              color="#f2f2f2"
+              size={20}
+            />
+            <TextInput
+              style={styles.imput}
+              placeholder="Seu email..."
+              placeholderTextColor="gray"
+              value={this.state.TextInputEmail}
+              onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
+            />
+          </View>
 
-        <TextInput
-        style={styles.imput}
-        underlineColorAndroid={'#FFF'}
-        placeholder='E-mail:'
-        placeholderTextColor = '#FFF'
-        onChangeText={TextInputEmail => this.setState({ TextInputEmail })}
-        />
+          <Text style={[styles.text_footer,{marginTop:15}]}>Senha</Text>
+          <View style={styles.action}>
+            <Feather
+              name="lock"
+              color='#f2f2f2'
+              size={20}
+            />
+            {this.state.secureTextEntry ?
+              <TextInput
+                style={styles.imput}
+                placeholder="Sua senha..."
+                placeholderTextColor="gray"
+                secureTextEntry={true}
+                onChangeText={TextInputSenha => this.setState({ TextInputSenha })}
+              />
+              :
+              <TextInput
+                style={styles.imput}
+                placeholder="Sua senha..."
+                onChangeText={TextInputSenha => this.setState({ TextInputSenha })}
+              />
+            }
+            <TouchableOpacity
+              onPress={() => this.secureTextEntry()}>
+              {this.state.secureTextEntry ?
+                <Feather
+                  name="eye-off"
+                  color="white"
+                  size={20}
+                />
+                :
+                <Feather
+                  name="eye"
+                  color="white"
+                  size={20}
+                />
+              }
+            </TouchableOpacity>
+              </View>
+            <Text style={[styles.text_footer,{marginTop:15}]}>Confirmar Senha</Text>
+          <View style={styles.action}>
+            <Feather
+              name="lock"
+              color='#f2f2f2'
+              size={20}
+            />
+            {this.state.secureTextEntry_confirm ?
+              <TextInput
+                style={styles.imput}
+                placeholder="Confirme sua senha..."
+                placeholderTextColor="gray"
+                secureTextEntry={true}
+                onChangeText={TextInputConfirmSenha => this.setState({ TextInputConfirmSenha })}
+              />
+              :
+              <TextInput
+                style={styles.imput}
+                placeholder="Confirme sua senha..."
+                onChangeText={TextInputConfirmSenha => this.setState({ TextInputConfirmSenha })}
+              />
+            }
+            <TouchableOpacity
+              onPress={() => this.secureTextEntry_confirm()}>
+              {this.state.secureTextEntry_confirm ?
+                <Feather
+                  name="eye-off"
+                  color="white"
+                  size={20}
+                />
+                :
+                <Feather
+                  name="eye"
+                  color="white"
+                  size={20}
+                />
+              }
+            </TouchableOpacity>
+          </View>
 
-        <TextInput
-        style={styles.imput}
-        secureTextEntry={true}
-        underlineColorAndroid={'#FFF'}
-        placeholder='Senha:'
-        placeholderTextColor = '#FFF'
-        onChangeText={TextInputSenha => this.setState({ TextInputSenha })}
-        /> 
-        
-
-        <TouchableOpacity 
-        style={styles.button}
-        onPress={this.CheckTextInput}
-        >  
-        <Text style={styles.buttonText}> Cadastrar </Text>            
-        </TouchableOpacity>   
-
-
+          <TouchableOpacity
+            style={styles.button1}
+            onPress={this.CheckTextInput}>
+            <LinearGradient colors={['#ffd700', '#ffd700', '#ffd700']}
+              style={styles.login}>
+              <Text style={styles.textLogin}>Cadastrar </Text>
+            </LinearGradient >
+          </TouchableOpacity>
+        </Animatable.View>
       </View>
+      
+
     )
   }
-
 }
 
 
