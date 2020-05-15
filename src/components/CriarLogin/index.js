@@ -100,7 +100,7 @@ export default class App extends Component{
         underlineColorAndroid={'#FFF'}
         placeholder='Senha:'
         placeholderTextColor = '#FFF'
-        onChangeText={TextInputEmail => this.setState({ TextInputSenha })}
+        onChangeText={TextInputSenha => this.setState({ TextInputSenha })}
         /> 
         
 

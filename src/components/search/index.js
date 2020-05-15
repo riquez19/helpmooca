@@ -35,6 +35,7 @@ export default class search extends Component{
             ref={c => this.googlePlacesAutocomplete = c}
             
             
+            
             styles={{
                 container:{
                     position: 'absolute',

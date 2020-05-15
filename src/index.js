@@ -1,24 +1,19 @@
-import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
-import Login from './components/login/index';
-import Map from './components/map/index';
-import Cadastro from './components/Cadastro/index';
-import CriarLogin from './components/CriarLogin/index'
+import React, { Component } from 'react';
+import Routes from './Routes';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware} from 'redux';
+import ReduxThunk from 'redux-thunk';
+import reducers from '../reducers/index';
 
-const Routes = createAppContainer(
-    createStackNavigator({
-        Login,
-        CriarLogin,
-        Map,
-        Cadastro,
-        
-    },  
-    {
-        headerMode: 'nome',
-    }
-    )
+class App extends Component {
+  render() {
+      const state= createStore(reducers,{},applyMiddleware(ReduxThunk))
+    return (
+      <Provider store={state}>
+        <Routes/>
+      </Provider>
+    );
+  }
+}
 
-)
-   
-
-export default Routes;
+export default App; 

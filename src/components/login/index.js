@@ -99,7 +99,7 @@ export default class App extends Component{
         <TouchableOpacity 
         style={styles.buttonCreate}
         //onPress={() => (this.props.navigation.navigate('CriarLogin'))}
-        onPress={() => (this.props.navigation.navigate('CriarLogin'))}
+        onPress={() => (this.props.navigation.navigate('Map'))}
         >  
         <Text style={styles.buttonTextCreate}> Criar Usuário </Text>            
         </TouchableOpacity> 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, ReactPropTypes} from 'react';
 import {
   View,
   ScrollView,
@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
   Text,
 } from 'react-native';
+
+import {postChamados} from '../../../actions/index';
+import {connect} from 'react-redux';
 
 import style from '../../styles/index';
 
@@ -19,7 +22,7 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 
 const {height, width} = Dimensions.get('window');
 
-export default class Cadastro extends Component{
+class Cadastro extends Component{
 
   state={
     categories: [
@@ -38,12 +41,25 @@ export default class Cadastro extends Component{
         title: 'Arvore'
 
       },
-    ]
+    ],
+    categorieName:"Farol",
+    description: "",
+    localAddress: this.props.navigation.getParam('local')
+  }
+
+  
+
+  submit = () => {
+    this.props.postChamados(this.state.categorieName, this.state.description, this.state.localAddress )
+    this.setState({
+      categorieName:'',
+      description:'',
+      localAddress:''      
+    })
   }
 
   render() {
     const {id, title} = this.state.categories[0]
-    console.log(id, title)
     return (
       <View style = {styles.container}>
         <ScrollView
@@ -58,7 +74,9 @@ export default class Cadastro extends Component{
           ? scrolled / Dimensions.get('window').width
           : 0;
 
-          const {id, title} = this.state.categories[place]  
+          const {id, title} = this.state.categories[place] 
+          
+          this.setState({categorieName:title})
 
           console.log(id, title)
 
@@ -66,6 +84,8 @@ export default class Cadastro extends Component{
         >          
           <View style = {styles.category}>
           <Icon name="traffic" size={150} color="black"/>
+          <Text style = {styles.textCategory}>
+          {'CATEGORIA 1\n\nSEMÁFOROS'}</Text>
           </View>
           <View style = {styles.category}>
           <Icon1 name="pipe-leak" size={150} color="#00BFFF"/>
@@ -81,6 +101,8 @@ export default class Cadastro extends Component{
         placeholder='Insira aqui a descrição da ocorrência'
         placeholderTextColor = '#FFF'
         multiline={true}
+        onChangeText={description => this.setState({description})}
+        value={this.state.description}
         />
 
         <TouchableOpacity 
@@ -92,6 +114,7 @@ export default class Cadastro extends Component{
 
         <TouchableOpacity 
         style={styles.button}
+        onPress={this.submit}
         >  
         <Text style={styles.buttonText}>Cadastrar </Text>            
         </TouchableOpacity>
@@ -105,10 +128,23 @@ export default class Cadastro extends Component{
 
 }
 
+
+
 const styles = StyleSheet.create({
   categoryContainer:{
     width: '100%',
     maxHeight: 150,
+  },
+  textCategory: {
+    paddingTop: 20,
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginRight: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 160,
+    textAlign: 'center',
+
   },
   category: {
     width: width - 40,
@@ -116,6 +152,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     marginHorizontal: 20,
     marginTop: 30,
+    flexDirection: 'row',
 
   },
   container: {
@@ -134,7 +171,6 @@ const styles = StyleSheet.create({
   },
   imputDesc: {
     height: 150,
-    //marginTop: 30,
     padding: 10,
     width: width - 40,
     backgroundColor: '#2c3e50',
@@ -177,5 +213,5 @@ const styles = StyleSheet.create({
 })
 
 
-
+export default connect(null, {postChamados})(Cadastro);
 
