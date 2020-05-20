@@ -1,4 +1,4 @@
-import React, {Component, ReactPropTypes} from 'react';
+import React, {Component} from 'react';
 import {
   View,
   ScrollView,
@@ -7,18 +7,19 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Plataform,
+  Image,
+  Alert,
+  ImageComponent
 } from 'react-native';
-
 import {postChamados} from '../../../actions/index';
 import {connect} from 'react-redux';
-
-import style from '../../styles/index';
-
+import * as Animatable from 'react-native-animatable';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
-
-import Icon2 from 'react-native-vector-icons/Entypo';
+import ImagePicker from 'react-native-image-picker';
+import firebase from 'firebase';
+import RNFetchBlob from  'react-native-fetch-blob';
 
 const {height, width} = Dimensions.get('window');
 
@@ -41,27 +42,49 @@ class Cadastro extends Component{
         title: 'Arvore'
 
       },
+      {
+        id: 4,
+        title: 'Outros'
+
+      },
     ],
     categorieName:"Farol",
     description: "",
-    localAddress: this.props.navigation.getParam('local')
+    localAddress: this.props.navigation.getParam('local'),
+    image: undefined,
   }
 
-  
-
-  submit = () => {
-    this.props.postChamados(this.state.categorieName, this.state.description, this.state.localAddress )
-    this.setState({
-      categorieName:'',
-      description:'',
-      localAddress:''      
+  pickImage = () => {
+    ImagePicker.showImagePicker({
+      title: 'Escolha uma imagem',
+      maxHeight: 600,
+      maxWidth: 800,
+    }, res => {
+      if (!res.didCancel) {
+        this.setState({image: {uri:res.uri, base64: res.data }})
+      }
     })
   }
+
+  save = async () => {
+    Alert.alert('Imagem adicionada!')
+  }
+
+  submit = () => {
+    this.props.postChamados(this.state.categorieName, this.state.description, this.state.localAddress, this.state.image )
+    this.setState({
+      categorieName:'',
+      description:'',      
+    })
+  }
+
 
   render() {
     const {id, title} = this.state.categories[0]
     return (
       <View style = {styles.container}>
+        <Animatable.View
+          animation="fadeInUpBig">
         <ScrollView
         styles={styles.categoryContainer}
         horizontal        
@@ -81,21 +104,31 @@ class Cadastro extends Component{
           console.log(id, title)
 
         }}
-        >          
+        >       
           <View style = {styles.category}>
           <Icon name="traffic" size={150} color="black"/>
           <Text style = {styles.textCategory}>
-          {'CATEGORIA 1\n\nSEMÁFOROS'}</Text>
+          {'SEMÁFOROS'}</Text>
           </View>
           <View style = {styles.category}>
           <Icon1 name="pipe-leak" size={150} color="#00BFFF"/>
+          <Text style = {styles.textCategory2}>
+          {'VAZAMENTOS'}</Text>
           </View>
           <View style = {styles.category}>
           <Icon1 name="tree" size={150} color="green"/>
+          <Text style = {styles.textCategory}>
+          {'ÁRVORES'}</Text>
+          </View>
+          <View style = {styles.category}>
+          <Icon1  name="help-circle-outline" size={150} color="black"/>
+          <Text style = {styles.textCategory}>
+          {'OUTROS'}</Text>
           </View>
         </ScrollView>
         
-        <View style = {styles.container2}>
+        <Text style={styles.text_footer2}>Descrição</Text>
+        <View style = {styles.container2}>        
         <TextInput
         style={styles.imputDesc}
         placeholder='Insira aqui a descrição da ocorrência'
@@ -107,6 +140,7 @@ class Cadastro extends Component{
 
         <TouchableOpacity 
         style={styles.button1}
+        onPress={this.pickImage}
         >  
         <Icon name="camera-alt" size={30} color="black"/> 
         <Text style={styles.buttonText}>    Inserir Foto/Vídeo </Text>                   
@@ -120,7 +154,7 @@ class Cadastro extends Component{
         </TouchableOpacity>
 
         </View>    
-        
+        </Animatable.View>
       </View>
       
     )
@@ -135,16 +169,31 @@ const styles = StyleSheet.create({
     width: '100%',
     maxHeight: 150,
   },
+  text_footer2:{
+    color:'#FFF',
+    fontSize:18,
+    marginLeft: 40,
+    marginTop: 25,
+  },
   textCategory: {
     paddingTop: 20,
     fontSize: 28,
-    fontWeight: 'bold',
     marginRight: 30,
     alignItems: 'center',
     justifyContent: 'center',
     width: 160,
     textAlign: 'center',
-
+    textAlignVertical: 'center'
+  },
+  textCategory2: {
+    paddingTop: 20,
+    fontSize: 25,
+    marginRight: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 160,
+    textAlign: 'center',
+    textAlignVertical: 'center'
   },
   category: {
     width: width - 40,

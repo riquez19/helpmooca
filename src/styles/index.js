@@ -10,13 +10,13 @@ const styles = StyleSheet.create({
 
     },
     logo: {
-        marginTop: 50,
+        marginTop: 20,
         width: 130,
         height: 130,
         borderRadius: 20,
     },
     logoCriar: {
-        marginTop: 10,
+        marginTop: 0,
         width: 300,
         height: 150,
         resizeMode: 'contain',
@@ -98,20 +98,21 @@ const styles = StyleSheet.create({
     
       },
     header: {
-        flex:2,
+        //flex:2,
         justifyContent:'center',
         alignItems: 'center'
     },
     footer: {
-        flex:2,
-        backgroundColor:'transparent',
-        
+        //flex:1,
+        marginTop: 10,
+        backgroundColor:'transparent',        
         paddingHorizontal:30,
         paddingVertical: 20,
         width:'100%',
         
     },
     text_footer: {
+        //marginTop: 30,
         color:'#f2f2f2',
         fontSize:18,
     },

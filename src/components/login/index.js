@@ -152,7 +152,7 @@ export default class App extends React.Component {
           </TouchableOpacity>
 
           <View style={[styles.button1, { marginTop: 10 }]}>
-            <TouchableOpacity onPress={() => (this.props.navigation.navigate('CriarLogin'))}
+            <TouchableOpacity onPress={() => (this.props.navigation.navigate('Feed'))}
               style={styles.criarConta}>
 
               <Text style={[styles.textLogin, {
